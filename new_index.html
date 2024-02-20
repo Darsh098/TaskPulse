@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="page-todo">
+        <div class="tasks">
+            <!-- Add Task Form -->
+            <div class="add-task-form">
+                <h2>Add New Task</h2>
+                <form id="add-task-form">
+                    <label for="task-title">Title:</label>
+                    <input type="text" id="task-title" placeholder="Enter task title" required>
+
+                    <label for="task-description">Description:</label>
+                    <textarea id="task-description" placeholder="Enter task description" rows="4" required></textarea>
+
+                    <label for="task-priority">Priority:</label>
+                    <select id="task-priority" required>
+                        <option value="high">High Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+
+                    <button type="button" onclick="addTask()">Add Task</button>
+                </form>
+            </div>
+
+            <!-- Edit Task Form -->
+            <div class="edit-task-form">
+                <h2>Edit Task</h2>
+                <form id="edit-task-form">
+                    <label for="edit-task-title">Title:</label>
+                    <input type="text" id="edit-task-title" required>
+
+                    <label for="edit-task-description">Description:</label>
+                    <textarea id="edit-task-description" rows="4" required></textarea>
+
+                    <label for="edit-task-priority">Priority:</label>
+                    <select id="edit-task-priority" required>
+                        <option value="high">High Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+
+                    <button type="button" onclick="editTask()">Save Changes</button>
+                    <button type="button" onclick="cancelEdit()">Cancel</button>
+                </form>
+            </div>
+            <div class="task-list">
+                <h1>Tasks</h1>
+                <div class="priority high"><span>High Priority</span></div>
+                <div class="task high last">
+                    <div class="desc">
+                        <div class="title">Title 1</div>
+                        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, accusantium.
+                        </div>
+                    </div>
+                    <div class="time">
+                        <div class="date">Jun 1, 2012</div>
+                        <div> 1 day</div>
+                    </div>
+                </div>
+
+                <div class="priority medium"><span>Medium Priority</span></div>
+
+                <div class="task medium">
+                    <div class="desc">
+                        <div class="title">Title 2</div>
+                        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, fugit.
+                        </div>
+                    </div>
+                    <div class="time">
+                        <div class="date">Jun 1, 2012</div>
+                        <div> 1 day</div>
+                    </div>
+                </div>
+                <div class="task medium last">
+                    <div class="desc">
+                        <div class="title">Title 3</div>
+                        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, fugit.
+                        </div>
+                    </div>
+                    <div class="time">
+                        <div class="date">Jun 1, 2012</div>
+                        <div> 1 day</div>
+                    </div>
+                </div>
+
+                <div class="priority low"><span>Low Priority</span></div>
+
+                <div class="task low">
+                    <div class="desc">
+                        <div class="title">Title 4</div>
+                        <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magni, reprehenderit.
+                        </div>
+                    </div>
+                    <div class="time">
+                        <div class="date">Jun 1, 2012</div>
+                        <div> 1 day</div>
+                    </div>
+                </div>
+                <div class="task low last">
+                    <div class="desc">
+                        <div class="title">Title 5</div>
+                        <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magni, reprehenderit.
+                        </div>
+                    </div>
+                    <div class="time">
+                        <div class="date">Jun 1, 2012</div>
+                        <div> 1 day</div>
+                    </div>
+                </div>
+                <div class="clearfix">No Tasks...</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
