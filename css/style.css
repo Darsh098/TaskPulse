@@ -60,6 +60,16 @@ body {
     cursor: pointer;
 }
 
+.add-task-form button.cancel {
+    background-color: #f86c6b;
+    /* Change this color to your desired color */
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 /* Styles for Edit Task Form */
 .edit-task-form {
     background: #fff;
