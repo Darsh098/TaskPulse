@@ -5,6 +5,8 @@ const path = require('path')
 const app = express()
 const port = 80
 
+mongoose.connect('mongodb://127.0.0.1:27017/taskpulse');
+
 // User Schema
 const userSchema = new mongoose.Schema({
     name: String,
@@ -24,10 +26,15 @@ app.get('/', (req, res) => {
     res.sendFile(fileName);
 })
 
-app.post('/register', (req, res) => {
-    console.log('Name:', req.body.name);
-    console.log('Email:', req.body.email);
-    console.log('Password:', req.body.password);
+app.post('/register', async (req, res) => {
+    const registerUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    })
+    const registered = await registerUser.save();
+    let fileName = path.join(__dirname, 'views', 'index.html');
+    res.status(201).sendFile(fileName);
 })
 
 app.listen(port, () => {
