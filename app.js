@@ -1,11 +1,11 @@
-const express = require('express')
+const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('./models/user');
-const path = require('path')
+const path = require('path');
 
-const app = express()
-const port = 80
+const app = express();
+const port = 80;
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/taskpulse');
@@ -49,5 +49,5 @@ app.post('/register', async (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`http://127.0.0.1:${port}/`)
+    console.log(`http://127.0.0.1:${port}/`);
 })
