@@ -1,20 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const User = require('./models/user');
 const path = require('path')
 const app = express()
 const port = 80
 
 mongoose.connect('mongodb://127.0.0.1:27017/taskpulse');
-
-// User Schema
-const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    password: String
-});
-
-const User = mongoose.model('User', userSchema);
 
 let staticFilesPath = path.join(__dirname, '/public');
 console.log(staticFilesPath);
@@ -26,15 +18,21 @@ app.get('/', (req, res) => {
     res.sendFile(fileName);
 })
 
-app.post('/register', async (req, res) => {
-    const registerUser = new User({
+app.post('/register', (req, res) => {
+    const newUser = new User({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password
     })
-    const registered = await registerUser.save();
-    let fileName = path.join(__dirname, 'views', 'index.html');
-    res.status(201).sendFile(fileName);
+    newUser.save()
+        .then(() => {
+            let fileName = path.join(__dirname, 'views', 'index.html');
+            res.status(201).sendFile(fileName);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        });
 })
 
 app.listen(port, () => {
