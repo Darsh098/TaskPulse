@@ -24,14 +24,17 @@ app.get('/', (req, res) => {
 })
 
 // Route to handle user registration
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
 
     // Create a new user using the User model
     const newUser = new User({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password
-    })
+    });
+
+    const token = await newUser.generateJWT();
+
     newUser.save()
         .then(() => {
             // After successful registration, redirect to the index page
