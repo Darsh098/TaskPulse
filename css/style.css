@@ -115,10 +115,10 @@ body {
 
 .page-todo .priority.high span {
     background: #f86c6b;
-    padding: 2px 10px;
+    padding: 3px 10px;
     color: #fff;
     display: inline-block;
-    font-size: 14px
+    font-size: 15px
 }
 
 .page-todo .priority.medium {
@@ -128,10 +128,10 @@ body {
 
 .page-todo .priority.medium span {
     background: #f8cb00;
-    padding: 2px 10px;
+    padding: 3px 10px;
     color: #fff;
     display: inline-block;
-    font-size: 14px
+    font-size: 15px
 }
 
 .page-todo .priority.low {
@@ -141,10 +141,10 @@ body {
 
 .page-todo .priority.low span {
     background: #4dbd74;
-    padding: 2px 10px;
+    padding: 3px 10px;
     color: #fff;
     display: inline-block;
-    font-size: 14px
+    font-size: 15px
 }
 
 .page-todo .task {
@@ -374,7 +374,8 @@ body {
 }
 
 .page-todo .task.last {
-    border-bottom: 1px solid transparent
+    margin-bottom: 5px;
+    border-bottom: 1px solid transparent;
 }
 
 @media only screen and (min-width:992px) and (max-width:1199px) {
