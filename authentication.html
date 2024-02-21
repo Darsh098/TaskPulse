@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Login / Signup - Task Pulse</title>
+  <link rel="stylesheet" href="/css/authentication.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="title-text">
+      <div class="title login">Login</div>
+      <div class="title signup">Signup</div>
+    </div>
+    <div class="form-container">
+      <div class="slide-controls">
+        <input type="radio" name="slide" id="login" checked>
+        <input type="radio" name="slide" id="signup">
+        <label for="login" class="slide login">Login</label>
+        <label for="signup" class="slide signup">Signup</label>
+        <div class="slider-tab"></div>
+      </div>
+      <div class="form-inner">
+        <form action="/login" class="login">
+          <div class="field">
+            <input type="email" id="email" placeholder="Enter Email" required>
+          </div>
+          <div class="field">
+            <input type="password" id="password" placeholder="Enter Password" required>
+          </div>
+          <!-- <div class="pass-link"><a href="#">Forgot password?</a></div> -->
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Login">
+          </div>
+          <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+        </form>
+        <form action="/register" class="signup">
+          <div class="field">
+            <input type="text" id="name" placeholder="Enter Name" required>
+          </div>
+          <div class="field">
+            <input type="email" id="email" placeholder="Enter Email" required>
+          </div>
+          <div class="field">
+            <input type="password" id="password" placeholder="Enter Password" required>
+          </div>
+          <!-- <div class="field">
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+          </div> -->
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Signup">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/authentication.js"></script>
+
+</body>
+
+</html>
