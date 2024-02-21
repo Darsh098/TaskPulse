@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -25,10 +25,10 @@
       <div class="form-inner">
         <form action="/login" class="login">
           <div class="field">
-            <input type="email" id="loginEmail" placeholder="Enter Email" required>
+            <input type="email" id="loginEmail" name="email" placeholder="Enter Email" required>
           </div>
           <div class="field">
-            <input type="password" id="loginPassword" placeholder="Enter Password" required>
+            <input type="password" id="loginPassword" name="password" placeholder="Enter Password" required>
           </div>
           <!-- <div class="pass-link"><a href="#">Forgot password?</a></div> -->
           <div class="field btn">
@@ -37,15 +37,15 @@
           </div>
           <div class="signup-link">Not a member? <a href="">Signup now</a></div>
         </form>
-        <form action="/register" class="signup">
+        <form action="/register" class="signup" method="POST">
           <div class="field">
-            <input type="text" id="signupName" placeholder="Enter Name" required>
+            <input type="text" id="signupName" name="name" placeholder="Enter Name" required>
           </div>
           <div class="field">
-            <input type="email" id="signupEmail" placeholder="Enter Email" required>
+            <input type="email" id="signupEmail" name="email" placeholder="Enter Email" required>
           </div>
           <div class="field">
-            <input type="password" id="signupPassword" placeholder="Enter Password" required>
+            <input type="password" id="signupPassword" name="password" placeholder="Enter Password" required>
           </div>
           <!-- <div class="field">
             <input type="password" id="confirm-password" placeholder="Confirm Password" required>
