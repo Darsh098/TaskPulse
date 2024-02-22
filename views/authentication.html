@@ -22,8 +22,10 @@
         <label for="signup" class="slide signup">Signup</label>
         <div class="slider-tab"></div>
       </div>
+      <!-- Add this element to your authentication.html or index.html -->
+      <div id="errorMessage"></div>
       <div class="form-inner">
-        <form action="/login" class="login">
+        <form class="login" method="post">
           <div class="field">
             <input type="email" id="loginEmail" name="email" placeholder="Enter Email" required>
           </div>
@@ -33,7 +35,7 @@
           <!-- <div class="pass-link"><a href="#">Forgot password?</a></div> -->
           <div class="field btn">
             <div class="btn-layer"></div>
-            <input type="submit" value="Login">
+            <input type="submit" value="Login" id="loginSubmit">
           </div>
           <div class="signup-link">Not a member? <a href="">Signup now</a></div>
         </form>
@@ -58,7 +60,6 @@
       </div>
     </div>
   </div>
-
   <script src="/js/authentication.js"></script>
 
 </body>

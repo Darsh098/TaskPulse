@@ -16,7 +16,7 @@ app.use(express.static(staticFilesPath));
 
 // Use body-parser middleware for URL-encoded data
 app.use(bodyParser.urlencoded({ extended: true })); // Use body-parser for URL-encoded data
-
+app.use(bodyParser.json());
 // Route to serve the login/signup page
 app.get('/', (req, res) => {
     let fileName = path.join(__dirname, 'views', 'authentication.html');
@@ -45,6 +45,27 @@ app.post('/register', async (req, res) => {
             console.error(err);
             res.status(500).send('Internal Server Error');
         });
+});
+
+// Route to handle user Login
+app.post('/login', async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+
+    let dbUser = await User.findOne({ email: email, password: password });
+    console.log("DB USER\n" + dbUser);
+    if (dbUser) {
+        // After successful Login, redirect to the index page
+        let fileName = path.join(__dirname, 'views', 'index.html');
+        res.status(201).sendFile(fileName);
+    }
+    else {
+        // Clear form fields and display an error message on the client-side
+        // res.sendFile(path.join(__dirname, 'views', 'authentication.html'));
+        res.json({ failure: true, message: 'Invalid Credentials' });
+
+    }
+
 })
 
 // Start the server
