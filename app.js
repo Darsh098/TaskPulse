@@ -42,6 +42,12 @@ app.post('/register', async (req, res) => {
 
     const token = await newUser.generateJWT();
 
+    res.cookie('jwt', token, {
+        expires: new Date(Date.now() + (15 * 60 * 1000)),
+        httpOnly: true
+    });
+
+
     newUser.save()
         .then(() => {
             // After successful registration, redirect to the index page
@@ -61,7 +67,12 @@ app.post('/login', async (req, res) => {
 
     let dbUser = await User.findOne({ email: email, password: password });
     const token = await dbUser.generateJWT();
-    console.log("Token:\n" + token);
+
+    res.cookie('jwt', token, {
+        expires: new Date(Date.now() + (15 * 60 * 1000)),
+        httpOnly: true
+    });
+
     if (dbUser) {
         // After successful Login, redirect to the index page
         res.json({ success: true, message: '/tasks' });
