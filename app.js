@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const auth = require('./middleware/auth');
 
 const app = express();
 const port = 80;
@@ -16,7 +18,10 @@ app.use(express.static(staticFilesPath));
 
 // Use body-parser middleware for URL-encoded data
 app.use(bodyParser.urlencoded({ extended: true })); // Use body-parser for URL-encoded data
+
 app.use(bodyParser.json());
+
+app.use(cookieParser());
 
 // Route to serve the login/signup page
 app.get('/', (req, res) => {
@@ -25,7 +30,7 @@ app.get('/', (req, res) => {
 })
 
 // Route to serve the tasks page
-app.get('/tasks', (req, res) => {
+app.get('/tasks', auth, (req, res) => {
     let fileName = path.join(__dirname, 'views', 'index.html');
     res.sendFile(fileName);
 })
@@ -66,14 +71,14 @@ app.post('/login', async (req, res) => {
     let password = req.body.password;
 
     let dbUser = await User.findOne({ email: email, password: password });
-    const token = await dbUser.generateJWT();
-
-    res.cookie('jwt', token, {
-        expires: new Date(Date.now() + (15 * 60 * 1000)),
-        httpOnly: true
-    });
 
     if (dbUser) {
+        const token = await dbUser.generateJWT();
+
+        res.cookie('jwt', token, {
+            expires: new Date(Date.now() + (15 * 60 * 1000)),
+            httpOnly: true
+        });
         // After successful Login, redirect to the index page
         res.json({ success: true, message: '/tasks' });
     }
