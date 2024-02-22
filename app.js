@@ -17,9 +17,16 @@ app.use(express.static(staticFilesPath));
 // Use body-parser middleware for URL-encoded data
 app.use(bodyParser.urlencoded({ extended: true })); // Use body-parser for URL-encoded data
 app.use(bodyParser.json());
+
 // Route to serve the login/signup page
 app.get('/', (req, res) => {
     let fileName = path.join(__dirname, 'views', 'authentication.html');
+    res.sendFile(fileName);
+})
+
+// Route to serve the tasks page
+app.get('/tasks', (req, res) => {
+    let fileName = path.join(__dirname, 'views', 'index.html');
     res.sendFile(fileName);
 })
 
@@ -56,13 +63,13 @@ app.post('/login', async (req, res) => {
     console.log("DB USER\n" + dbUser);
     if (dbUser) {
         // After successful Login, redirect to the index page
-        let fileName = path.join(__dirname, 'views', 'index.html');
-        res.status(201).sendFile(fileName);
+        // res.redirect('/tasks');
+        res.json({ success: true, message: '/tasks' });
     }
     else {
         // Clear form fields and display an error message on the client-side
         // res.sendFile(path.join(__dirname, 'views', 'authentication.html'));
-        res.json({ failure: true, message: 'Invalid Credentials' });
+        res.json({ success: false, message: 'Invalid Credentials' });
 
     }
 

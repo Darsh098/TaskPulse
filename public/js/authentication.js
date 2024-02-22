@@ -50,7 +50,10 @@ function buttonClickHandler(event) {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.failure) {
+            if (data.success) {
+                window.location.href = data.message;
+            }
+            else {
                 clearForm();
                 displayErrorMessage(data.message);
             }
