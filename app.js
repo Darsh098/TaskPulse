@@ -45,8 +45,8 @@ app.post('/register', async (req, res) => {
     newUser.save()
         .then(() => {
             // After successful registration, redirect to the index page
-            let fileName = path.join(__dirname, 'views', 'index.html');
-            res.status(201).sendFile(fileName);
+            let fileName = path.join(__dirname, 'views', 'authentication.html');
+            res.status(201).redirect('/');
         })
         .catch(err => {
             console.error(err);
@@ -60,17 +60,15 @@ app.post('/login', async (req, res) => {
     let password = req.body.password;
 
     let dbUser = await User.findOne({ email: email, password: password });
-    console.log("DB USER\n" + dbUser);
+    const token = await dbUser.generateJWT();
+    console.log("Token:\n" + token);
     if (dbUser) {
         // After successful Login, redirect to the index page
-        // res.redirect('/tasks');
         res.json({ success: true, message: '/tasks' });
     }
     else {
         // Clear form fields and display an error message on the client-side
-        // res.sendFile(path.join(__dirname, 'views', 'authentication.html'));
         res.json({ success: false, message: 'Invalid Credentials' });
-
     }
 
 })

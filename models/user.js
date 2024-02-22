@@ -18,6 +18,7 @@ userSchema.methods.generateJWT = async function () {
     try {
         const authToken = jwt.sign({ _id: this._id.toString() }, secret);
         this.tokens = this.tokens.concat({ token: authToken });
+        await this.save();
         return authToken;
     }
     catch (err) {
