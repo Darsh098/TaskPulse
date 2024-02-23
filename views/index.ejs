@@ -10,10 +10,10 @@
 
 <body>
     <!-- Add Task Form -->
-    <div class="add-task-form">
+    <div class="add-task-form" id="addContainer">
         <h1 style="text-align: center; font-family: 'Playfair Display', serif;">Task Pulse</h1>
-        <h2 style="font-family: 'Alegreya', serif;">Add New Task</h2>
-        <form id="add-task-form" action="/tasks" method="POST">
+        <h2 style="font-family: 'Alegreya', serif;" id="taskProcess">Add New Task</h2>
+        <form id="formAddTask" action="/tasks" method="POST">
             <label for="task-title">Title:</label>
             <input type="text" name="title" id="task-title" placeholder="Enter task title" required>
 
@@ -35,9 +35,10 @@
     </div>
 
     <!-- Edit Task Form -->
-    <div class="edit-task-form">
+    <div class="edit-task-form" id="editContainer">
+        <h1 style="text-align: center; font-family: 'Playfair Display', serif;">Task Pulse</h1>
         <h2>Edit Task</h2>
-        <form id="edit-task-form">
+        <form id="formEditTask">
             <label for="edit-task-title">Title:</label>
             <input type="text" id="edit-task-title" required>
 
@@ -86,7 +87,8 @@
                                 <div class="icons">
                                     <span class="icon complete-icon"
                                         onclick="markAsComplete('<%= task._id %>')">&#10003;</span>
-                                    <span class="icon edit-icon" onclick="editTask('<%= task._id %>')">&#9998;</span>
+                                    <span class="icon edit-icon"
+                                        onclick="editTask('<%= task._id %>', '<%= task.title %>', '<%= task.description %>', '<%= task.priority %>')">&#9998;</span>
                                     <span class="icon delete-icon"
                                         onclick="deleteTask('<%= task._id %>')">&#10007;</span>
                                 </div>

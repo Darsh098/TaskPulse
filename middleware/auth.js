@@ -7,7 +7,6 @@ const auth = async (req, res, next) => {
         const verifyUser = jwt.verify(token, process.env.SECRET);
 
         const u = await User.findOne({ _id: verifyUser._id });
-        console.log("User:\n" + u);
         next();
     }
     catch (err) {

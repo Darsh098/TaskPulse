@@ -160,6 +160,51 @@ app.post('/tasks', async (req, res) => {
         });
 })
 
+// Handle the route for updating a task
+app.post('/tasks/edit', async (req, res) => {
+    try {
+        // Extract data from the request body
+        const taskId = req.body.taskId;
+        const updatedTitle = req.body.title;
+        const updatedDescription = req.body.description;
+        const updatedPriority = req.body.priority;
+
+        console.log("ID:" + taskId);
+        console.log("Title" + updatedTitle);
+        console.log("Desc:" + updatedDescription);
+        console.log("pri: " + updatedPriority);
+
+        // Find the task by taskId and update its properties
+        const updatedTask = await Task.findByIdAndUpdate(taskId, {
+            title: updatedTitle,
+            description: updatedDescription,
+            priority: updatedPriority,
+        }, { new: true });
+
+        // Respond with the updated task or a success message
+        res.redirect('/tasks');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+});
+
+// Route to handle task deletion using POST request
+app.post('/tasks/delete', async (req, res) => {
+    try {
+        const taskId = req.body.taskId;
+
+        await Task.findByIdAndDelete(taskId);
+
+        // Respond with a success status
+        res.sendStatus(200);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 // Start the server
 app.listen(port, () => {
     console.log(`http://127.0.0.1:${port}/`);
