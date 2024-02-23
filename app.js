@@ -10,6 +10,7 @@ const Task = require('./models/task');
 
 const app = express();
 const port = 80;
+app.set('view engine', 'ejs');
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/taskpulse');
@@ -86,9 +87,43 @@ app.post('/login', async (req, res) => {
 })
 
 // Route to serve the tasks page
-app.get('/tasks', auth, (req, res) => {
-    let fileName = path.join(__dirname, 'views', 'index.html');
-    res.sendFile(fileName);
+app.get('/tasks', auth, async (req, res) => {
+    try {
+        const token = req.cookies.jwt;
+        const verifyUser = jwt.verify(token, process.env.SECRET);
+
+        // Find the user based on the ID extracted from the token
+        const user = await User.findOne({ _id: verifyUser._id });
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Find tasks for the authenticated user
+        const tasks = await Task.find({ userId: user._id });
+
+        // Organize tasks by priority
+        const tasksByPriority = {
+            high: [],
+            medium: [],
+            low: []
+        };
+
+        tasks.forEach(task => {
+            tasksByPriority[task.priority].push(task);
+        });
+
+        // Render the index.ejs page with the user's tasks
+        let fileName = path.join(__dirname, 'views', 'index.ejs');
+
+        // Pass tasksByPriority as a variable to be used in your template
+        res.render(fileName, { tasksByPriority });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+    // let fileName = path.join(__dirname, 'views', 'index.html');
+    // res.sendFile(fileName);
 })
 
 

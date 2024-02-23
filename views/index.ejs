@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Pulse</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Add Task Form -->
+    <div class="add-task-form">
+        <h1 style="text-align: center; font-family: 'Playfair Display', serif;">Task Pulse</h1>
+        <h2 style="font-family: 'Alegreya', serif;">Add New Task</h2>
+        <form id="add-task-form" action="/tasks" method="POST">
+            <label for="task-title">Title:</label>
+            <input type="text" name="title" id="task-title" placeholder="Enter task title" required>
+
+            <label for="task-description">Description:</label>
+            <textarea id="task-description" name="description" placeholder="Enter task description" rows="4"
+                required></textarea>
+
+            <label for="task-priority">Priority:</label>
+            <select id="task-priority" name="priority" required>
+                <option value="high" class="option-high">High</option>
+                <option value="medium" class="option-medium">Medium</option>
+                <option value="low" class="option-low">Low</option>
+            </select>
+
+            <button type="submit" id="addSubmit">Add Task</button>
+            <button type="button" id="addCancel" class="cancel">Cancel</button>
+
+        </form>
+    </div>
+
+    <!-- Edit Task Form -->
+    <div class="edit-task-form">
+        <h2>Edit Task</h2>
+        <form id="edit-task-form">
+            <label for="edit-task-title">Title:</label>
+            <input type="text" id="edit-task-title" required>
+
+            <label for="edit-task-description">Description:</label>
+            <textarea id="edit-task-description" rows="4" required></textarea>
+
+            <label for="edit-task-priority">Priority:</label>
+            <select id="edit-task-priority" required>
+                <option value="high">High Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="low">Low Priority</option>
+            </select>
+
+            <button type="submit" id="edit-task-submit">Save Changes</button>
+            <button type="button" id="edit-task-cancel" class="cancel">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Task List -->
+    <div class="page-todo">
+        <div class="tasks">
+            <div class="task-list">
+                <h1 style="font-family: 'Alegreya', serif;">Tasks</h1>
+
+                <% Object.keys(tasksByPriority).forEach(priority=> { %>
+                    <div class="priority <%= priority %>"><span>
+                            <%= priority.charAt(0).toUpperCase() + priority.slice(1) %> Priority
+                        </span></div>
+                    <% tasksByPriority[priority].forEach(task=> { %>
+                        <div class="task <%= priority %>">
+                            <div class="desc">
+                                <div class="title">
+                                    <%= task.title %>
+                                </div>
+                                <div>
+                                    <%= task.description %>
+                                </div>
+                            </div>
+                            <div class="time">
+                                <div class="date">
+                                    <%= new Date(task.date).toDateString() %>
+                                </div>
+                                <!-- You can add more details here -->
+                            </div>
+                        </div>
+                        <% }); %>
+                            <% }); %>
+
+                                <!-- Display a message if there are no tasks -->
+                                <div class="clearfix">
+                                    <%= tasksByPriority.length===0 ? 'No Tasks...' : '' %>
+                                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+
+</html>
