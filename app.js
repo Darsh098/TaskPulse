@@ -27,9 +27,22 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Route to serve the login/signup page
-app.get('/', (req, res) => {
-    let fileName = path.join(__dirname, 'views', 'authentication.html');
-    res.sendFile(fileName);
+app.get('/', async (req, res) => {
+
+    //Check if user is logged it should redirect to /tasks
+    const token = req.cookies.jwt;
+    const verifyUser = jwt.verify(token, process.env.SECRET);
+
+    // Find the user based on the ID extracted from the token
+    const user = await User.findOne({ _id: verifyUser._id });
+
+    //Check if user is logged it should redirect to /tasks
+    if (!user) {
+        let fileName = path.join(__dirname, 'views', 'authentication.html');
+        res.sendFile(fileName);
+    }
+    else
+        res.redirect('/tasks');
 })
 
 // Route to handle user registration
