@@ -62,10 +62,12 @@
             <div class="task-list">
                 <h1 style="font-family: 'Alegreya', serif;">Tasks</h1>
 
-                <% Object.keys(tasksByPriority).forEach(priority=> { %>
+                <% Object.keys(tasksByPriority).forEach(priority=> {
+                    if (tasksByPriority[priority].length > 0) { %>
                     <div class="priority <%= priority %>"><span>
                             <%= priority.charAt(0).toUpperCase() + priority.slice(1) %> Priority
                         </span></div>
+
                     <% tasksByPriority[priority].forEach(task=> { %>
                         <div class="task <%= priority %>">
                             <div class="desc">
@@ -80,15 +82,16 @@
                                 <div class="date">
                                     <%= new Date(task.date).toDateString() %>
                                 </div>
-                                <!-- You can add more details here -->
                             </div>
                         </div>
                         <% }); %>
-                            <% }); %>
+                            <% } }); %>
 
                                 <!-- Display a message if there are no tasks -->
-                                <div class="clearfix">
-                                    <%= tasksByPriority.length===0 ? 'No Tasks...' : '' %>
+                                <div class="clearfix" <%=tasksByPriority['high'].length===0
+                                    &&tasksByPriority['medium'].length===0 && tasksByPriority['low'].length===0
+                                    ? 'style=display:block;' : 'style=display:none;' %>>
+                                    No Tasks Added...
                                 </div>
             </div>
         </div>
