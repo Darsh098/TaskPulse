@@ -189,6 +189,23 @@ app.post('/tasks/edit', async (req, res) => {
     }
 });
 
+// Route to handle task completion using POST request
+app.post('/tasks/complete', async (req, res) => {
+    try {
+        const taskId = req.body.taskId;
+
+        const updatedTask = await Task.findByIdAndUpdate(taskId, {
+            isCompleted: true
+        }, { new: true });
+
+        // Respond with a success status
+        res.sendStatus(200);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // Route to handle task deletion using POST request
 app.post('/tasks/delete', async (req, res) => {
     try {
@@ -204,6 +221,11 @@ app.post('/tasks/delete', async (req, res) => {
     }
 });
 
+
+app.get('/logout', (req, res) => {
+    res.clearCookie('jwt', { httpOnly: true, expires: new Date(0) });
+    res.redirect('/');
+});
 
 // Start the server
 app.listen(port, () => {

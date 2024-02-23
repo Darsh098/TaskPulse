@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to handle the cancel action
 function cancelAdd() {
-    let formAddTask = document.getElementById('formAddTask');
+    let taskForm = document.getElementById('taskForm');
     const editTaskTitleInput = document.getElementById('task-title');
     let taskProcess = document.getElementById('taskProcess');
     const editTaskDescriptionInput = document.getElementById('task-description');
@@ -46,7 +46,7 @@ function cancelAdd() {
     let addSubmit = document.getElementById('addSubmit');
 
     // Clear the values of the input fields
-    formAddTask.action = "/tasks";
+    taskForm.action = "/tasks";
     taskProcess.innerText = "Add New Task";
     editTaskTitleInput.value = '';
     editTaskDescriptionInput.value = '';
@@ -56,29 +56,28 @@ function cancelAdd() {
 
 function editTask(id, title, description, priority) {
     let addContainer = document.getElementById('addContainer');
-    let formAddTask = document.getElementById('formAddTask');
+    let taskForm = document.getElementById('taskForm');
     let taskProcess = document.getElementById('taskProcess');
     let taskTitle = document.getElementById('task-title');
     let taskDescription = document.getElementById('task-description');
     let taskPriority = document.getElementById('task-priority');
     let addSubmit = document.getElementById('addSubmit');
 
-    let taskId = formAddTask.querySelector('input[name="taskId"]');
+    let taskId = taskForm.querySelector('input[name="taskId"]');
     if (!taskId) {
         taskId = document.createElement('input');
         taskId.type = 'hidden';
         taskId.name = 'taskId';
-        formAddTask.appendChild(taskId);
+        taskForm.appendChild(taskId);
     }
     taskId.value = id;
 
     taskProcess.innerText = "Edit Task";
-    formAddTask.action = "/tasks/edit"
+    taskForm.action = "/tasks/edit"
     taskTitle.value = title;
     taskDescription.value = description;
     taskPriority.value = priority;
     addSubmit.textContent = "Update Task";
-
 }
 
 function deleteTask(taskId) {
@@ -99,3 +98,30 @@ function deleteTask(taskId) {
             console.error('Error:', error);
         });
 }
+
+function markAsComplete(taskId) {
+    fetch('/tasks/complete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ taskId: taskId }),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
+
+function logout() {
+    // Redirect to the logout
+    window.location.href = "/logout";
+}
+

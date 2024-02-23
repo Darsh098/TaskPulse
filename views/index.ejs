@@ -9,11 +9,12 @@
 </head>
 
 <body>
-    <!-- Add Task Form -->
+    <!-- Add/Edit Task Form -->
     <div class="add-task-form" id="addContainer">
+        <button class="logout-button" onclick="logout()">Logout</button>
         <h1 style="text-align: center; font-family: 'Playfair Display', serif;">Task Pulse</h1>
         <h2 style="font-family: 'Alegreya', serif;" id="taskProcess">Add New Task</h2>
-        <form id="formAddTask" action="/tasks" method="POST">
+        <form id="taskForm" action="/tasks" method="POST">
             <label for="task-title">Title:</label>
             <input type="text" name="title" id="task-title" placeholder="Enter task title" required>
 
@@ -31,29 +32,6 @@
             <button type="submit" id="addSubmit">Add Task</button>
             <button type="button" id="addCancel" class="cancel">Cancel</button>
 
-        </form>
-    </div>
-
-    <!-- Edit Task Form -->
-    <div class="edit-task-form" id="editContainer">
-        <h1 style="text-align: center; font-family: 'Playfair Display', serif;">Task Pulse</h1>
-        <h2>Edit Task</h2>
-        <form id="formEditTask">
-            <label for="edit-task-title">Title:</label>
-            <input type="text" id="edit-task-title" required>
-
-            <label for="edit-task-description">Description:</label>
-            <textarea id="edit-task-description" rows="4" required></textarea>
-
-            <label for="edit-task-priority">Priority:</label>
-            <select id="edit-task-priority" required>
-                <option value="high">High Priority</option>
-                <option value="medium">Medium Priority</option>
-                <option value="low">Low Priority</option>
-            </select>
-
-            <button type="submit" id="edit-task-submit">Save Changes</button>
-            <button type="button" id="edit-task-cancel" class="cancel">Cancel</button>
         </form>
     </div>
 
@@ -81,14 +59,26 @@
                                 </div>
                             </div>
                             <div class="time">
-                                <div class="date">
+                                <!-- <div class="date completed-task">
+                                    Completed
+                                </div>
+                                <div class="date" id="dateId">
+                                    <%= new Date(task.date).toDateString() %>
+                                </div> -->
+                                <div class="date completed-task" <%=task.isCompleted ? 'style=display:block;'
+                                    : 'style=display:none;' %>>
+                                    Completed
+                                </div>
+                                <div class="date" id="dateId" <%=task.isCompleted ? 'style=display:none;'
+                                    : 'style=display:block;' %>>
                                     <%= new Date(task.date).toDateString() %>
                                 </div>
                                 <div class="icons">
-                                    <span class="icon complete-icon"
+                                    <span class="icon complete-icon" <%=task.isCompleted ? 'style=display:none;' : '' %>
                                         onclick="markAsComplete('<%= task._id %>')">&#10003;</span>
-                                    <span class="icon edit-icon"
-                                        onclick="editTask('<%= task._id %>', '<%= task.title %>', '<%= task.description %>', '<%= task.priority %>')">&#9998;</span>
+                                    <span class="icon edit-icon" <%=task.isCompleted ? 'style=display:none;' : '' %>
+                                        onclick="editTask('<%= task._id %>', '<%= task.title %>', '<%= task.description
+                                                    %>', '<%= task.priority %>')">&#9998;</span>
                                     <span class="icon delete-icon"
                                         onclick="deleteTask('<%= task._id %>')">&#10007;</span>
                                 </div>

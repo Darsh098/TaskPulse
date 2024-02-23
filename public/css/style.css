@@ -153,6 +153,23 @@ body {
     position: relative
 }
 
+.completed-task {
+    display: none;
+}
+
+.add-task-form button.logout-button {
+    position: absolute;
+    top: 26px;
+    right: 15px;
+    padding: 5px 10px;
+    background-color: #f44336;
+    /* Red color, you can change it */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /* Icons CSS 
 */
 .page-todo .icons {
