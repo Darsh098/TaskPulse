@@ -13,22 +13,23 @@
     <div class="add-task-form">
         <h1 style="text-align: center; font-family: 'Playfair Display', serif;">Task Pulse</h1>
         <h2 style="font-family: 'Alegreya', serif;">Add New Task</h2>
-        <form id="add-task-form">
+        <form id="add-task-form" action="/tasks" method="POST">
             <label for="task-title">Title:</label>
-            <input type="text" id="task-title" placeholder="Enter task title" required>
+            <input type="text" name="title" id="task-title" placeholder="Enter task title" required>
 
             <label for="task-description">Description:</label>
-            <textarea id="task-description" placeholder="Enter task description" rows="4" required></textarea>
+            <textarea id="task-description" name="description" placeholder="Enter task description" rows="4"
+                required></textarea>
 
             <label for="task-priority">Priority:</label>
-            <select id="task-priority" required>
+            <select id="task-priority" name="priority" required>
                 <option value="high" class="option-high">High</option>
                 <option value="medium" class="option-medium">Medium</option>
                 <option value="low" class="option-low">Low</option>
             </select>
 
-            <button type="button" onclick="addTask()">Add Task</button>
-            <button type="button" onclick="cancelAddTask()" class="cancel">Cancel</button>
+            <button type="submit">Add Task</button>
+            <button type="button" class="cancel">Cancel</button>
 
         </form>
     </div>

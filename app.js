@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const User = require('./models/user');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const auth = require('./middleware/auth');
+const Task = require('./models/task');
 
 const app = express();
 const port = 80;
@@ -26,12 +28,6 @@ app.use(cookieParser());
 // Route to serve the login/signup page
 app.get('/', (req, res) => {
     let fileName = path.join(__dirname, 'views', 'authentication.html');
-    res.sendFile(fileName);
-})
-
-// Route to serve the tasks page
-app.get('/tasks', auth, (req, res) => {
-    let fileName = path.join(__dirname, 'views', 'index.html');
     res.sendFile(fileName);
 })
 
@@ -87,6 +83,45 @@ app.post('/login', async (req, res) => {
         res.json({ success: false, message: 'Invalid Credentials' });
     }
 
+})
+
+// Route to serve the tasks page
+app.get('/tasks', auth, (req, res) => {
+    let fileName = path.join(__dirname, 'views', 'index.html');
+    res.sendFile(fileName);
+})
+
+
+// Route to Add task
+app.post('/tasks', async (req, res) => {
+    let title = req.body.title
+    let description = req.body.description;
+    let priority = req.body.priority;
+    let day = new Date().getDate();
+    let month = new Date().getMonth();
+    let year = new Date().getFullYear();
+    let date = `${day}/${month}/${year}`;
+
+    const token = req.cookies.jwt;
+    const verifyUser = jwt.verify(token, process.env.SECRET);
+    const u = await User.findOne({ _id: verifyUser._id });
+
+    const newTask = new Task({
+        userId: u._id,
+        title: title,
+        description: description,
+        priority: priority,
+        date: new Date()
+    });
+
+    newTask.save()
+        .then(() => {
+            res.status(201).redirect('/tasks');
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        });
 })
 
 // Start the server

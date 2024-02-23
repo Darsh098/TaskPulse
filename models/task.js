@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-// User Schema
+// Task Schema
 const taskSchema = new mongoose.Schema({
     userId: String,
     title: String,
     description: String,
+    priority: String,
     date: Date
 });
 
