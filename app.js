@@ -135,7 +135,7 @@ app.post('/tasks', async (req, res) => {
     let day = new Date().getDate();
     let month = new Date().getMonth();
     let year = new Date().getFullYear();
-    let date = `${day}/${month}/${year}`;
+    let isCompleted = false;
 
     const token = req.cookies.jwt;
     const verifyUser = jwt.verify(token, process.env.SECRET);
@@ -146,7 +146,8 @@ app.post('/tasks', async (req, res) => {
         title: title,
         description: description,
         priority: priority,
-        date: new Date()
+        date: new Date(),
+        isCompleted: isCompleted
     });
 
     newTask.save()

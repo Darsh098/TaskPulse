@@ -154,9 +154,10 @@ body {
 }
 
 /* Icons CSS 
-
+*/
 .page-todo .icons {
     display: flex;
+    justify-content: right;
     gap: 10px;
 }
 
@@ -175,7 +176,7 @@ body {
 
 .page-todo .icons .delete-icon {
     color: #d9534f;
-} */
+}
 
 .page-todo .task .desc {
     display: inline-block;

@@ -6,7 +6,8 @@ const taskSchema = new mongoose.Schema({
     title: String,
     description: String,
     priority: String,
-    date: Date
+    date: Date,
+    isCompleted: Boolean
 });
 
 const Task = mongoose.model('Task', taskSchema);
